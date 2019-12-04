@@ -193,7 +193,8 @@ int main()
 
 	const GLuint program(loadProgram("point.vert", "point.frag"));
 
-	const GLuint aspectLoc(glGetUniformLocation(program, "aspect"));
+	const GLint sizeLoc(glGetUniformLocation(program, "size"));
+	const GLint scaleLoc(glGetUniformLocation(program, "scale"));
 
 	std::unique_ptr<const Shape> shape(new Shape(2, 4, rectangleVertex));
 
@@ -203,7 +204,9 @@ int main()
 
 		glUseProgram(program);
 		
-		glUniform1f(aspectLoc, window.getAspect());
+		glUniform2fv(sizeLoc, 1, window.getSize());
+		glUniform1f(scaleLoc, window.getScale());
+
 		shape->draw();
 
 		window.swapBuffers();

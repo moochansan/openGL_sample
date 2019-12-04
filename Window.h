@@ -7,11 +7,13 @@ class Window
 {
 private:
 	GLFWwindow* const window;
-	GLfloat aspect;
+	GLfloat size[2];
+	GLfloat scale;
 
 public:
 	Window(int width = 640, int height = 480, const char* title = "Hello.")
-	 : window(glfwCreateWindow(width, height, title, NULL, NULL))
+	 : window(glfwCreateWindow(width, height, title, NULL, NULL)),
+	   scale(100.f)
 	{
 		if (window == NULL)
 		{
@@ -64,11 +66,14 @@ public:
 
 		if (instance != NULL)
 		{
-			instance->aspect = static_cast<GLfloat>(width) / static_cast<GLfloat>(height);
+			instance->size[0] = static_cast<GLfloat>(width);
+			instance->size[1] = static_cast<GLfloat>(height);
 		}
 	}
 
-	GLfloat getAspect() const {return aspect; }
+	const GLfloat* getSize() const {return size; }
+
+	GLfloat getScale() const {return scale; }
 
 };
 
