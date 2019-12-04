@@ -38,6 +38,8 @@ public:
 
 		glfwSetWindowSizeCallback(window, resize);
 
+		glfwSetScrollCallback(window, wheel);
+
 		resize(window, width, height);
 	}
 	
@@ -81,6 +83,16 @@ public:
 		{
 			instance->size[0] = static_cast<GLfloat>(width);
 			instance->size[1] = static_cast<GLfloat>(height);
+		}
+	}
+
+	static void wheel(GLFWwindow* window, double x, double y)
+	{
+		Window* const instance(static_cast<Window*>(glfwGetWindowUserPointer(window)));
+
+		if (instance != NULL)
+		{
+			instance->scale +=static_cast<GLfloat>(y);
 		}
 	}
 
