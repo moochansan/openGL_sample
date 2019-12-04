@@ -195,6 +195,7 @@ int main()
 
 	const GLint sizeLoc(glGetUniformLocation(program, "size"));
 	const GLint scaleLoc(glGetUniformLocation(program, "scale"));
+	const GLint locationLoc(glGetUniformLocation(program, "location"));
 
 	std::unique_ptr<const Shape> shape(new Shape(2, 4, rectangleVertex));
 
@@ -206,6 +207,7 @@ int main()
 		
 		glUniform2fv(sizeLoc, 1, window.getSize());
 		glUniform1f(scaleLoc, window.getScale());
+		glUniform2fv(locationLoc, 1, window.getLocation());
 
 		shape->draw();
 

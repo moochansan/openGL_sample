@@ -9,11 +9,13 @@ private:
 	GLFWwindow* const window;
 	GLfloat size[2];
 	GLfloat scale;
+	GLfloat location[2];
 
 public:
 	Window(int width = 640, int height = 480, const char* title = "Hello.")
 	 : window(glfwCreateWindow(width, height, title, NULL, NULL)),
-	   scale(100.f)
+	   scale(100.f),
+	   location{ 0.f, 0.f }
 	{
 		if (window == NULL)
 		{
@@ -47,7 +49,18 @@ public:
 	explicit operator bool()
 	{
 		glfwWaitEvents();
+
+		if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) != GLFW_RELEASE)
+		{
+			double x, y;
+			glfwGetCursorPos(window, &x, &y);
+
+			location[0] = static_cast<GLfloat>(x) * 2.f / size[0] - 1.f;
+			location[1] = 1.f - static_cast<GLfloat>(y) * 2.f / size[1];
+		}
+
 		return !glfwWindowShouldClose(window);
+		
 	}
 
 	void swapBuffers() const
@@ -74,6 +87,8 @@ public:
 	const GLfloat* getSize() const {return size; }
 
 	GLfloat getScale() const {return scale; }
+
+	const GLfloat* getLocation() const {return location; }
 
 };
 
