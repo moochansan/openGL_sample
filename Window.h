@@ -10,12 +10,14 @@ private:
 	GLfloat size[2];
 	GLfloat scale;
 	GLfloat location[2];
+	int keyStatus;
 
 public:
 	Window(int width = 640, int height = 480, const char* title = "Hello.")
 	 : window(glfwCreateWindow(width, height, title, NULL, NULL)),
 	   scale(100.f),
-	   location{ 0.f, 0.f }
+	   location{ 0.f, 0.f },
+	   keyStatus(GLFW_RELEASE)
 	{
 		if (window == NULL)
 		{
@@ -40,6 +42,8 @@ public:
 
 		glfwSetScrollCallback(window, wheel);
 
+        glfwSetKeyCallback(window, keyboard);
+
 		resize(window, width, height);
 	}
 	
@@ -50,7 +54,18 @@ public:
 
 	explicit operator bool()
 	{
-		glfwWaitEvents();
+        if (keyStatus == GLFW_RELEASE) glfwWaitEvents();
+        else glfwPollEvents();
+
+        if (glfwGetKey(window, GLFW_KEY_LEFT) != GLFW_RELEASE)
+            location[0] -= 2.f / size[0];
+        else if (glfwGetKey(window, GLFW_KEY_RIGHT) != GLFW_RELEASE)
+            location[0] += 2.f / size[0];
+
+        if (glfwGetKey(window, GLFW_KEY_DOWN) != GLFW_RELEASE)
+            location[1] -= 2.f / size[1];
+        else if (glfwGetKey(window, GLFW_KEY_UP) != GLFW_RELEASE)
+            location[1] += 2.f / size[1];
 
 		if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) != GLFW_RELEASE)
 		{
@@ -61,7 +76,7 @@ public:
 			location[1] = 1.f - static_cast<GLfloat>(y) * 2.f / size[1];
 		}
 
-		return !glfwWindowShouldClose(window);
+		return !glfwWindowShouldClose(window) && !glfwGetKey(window, GLFW_KEY_ESCAPE);
 		
 	}
 
@@ -95,6 +110,16 @@ public:
 			instance->scale +=static_cast<GLfloat>(y);
 		}
 	}
+
+    static void keyboard(GLFWwindow* window, int key, int scancode, int action, int mods)
+    {
+        Window* const instance(static_cast<Window*>(glfwGetWindowUserPointer(window)));
+
+        if (instance != NULL)
+        {
+            instance->keyStatus = action;
+        }
+    }
 
 	const GLfloat* getSize() const {return size; }
 
