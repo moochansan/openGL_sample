@@ -190,8 +190,16 @@ int main()
 	
 	glClearColor(1.f, 1.f, 1.f, 0.f);
 
+#ifdef _WIN64
+	const char* vertFile = "..\\sample\\point.vert";
+	const char* fragFile = "..\\sample\\point.frag";
+#else
+	const char* vertFile = "point.vert";
+	const char* fragFile = "point.frag";
+#endif
 
-	const GLuint program(loadProgram("point.vert", "point.frag"));
+
+	const GLuint program(loadProgram(vertFile, fragFile));
 
 	const GLint sizeLoc(glGetUniformLocation(program, "size"));
 	const GLint scaleLoc(glGetUniformLocation(program, "scale"));
