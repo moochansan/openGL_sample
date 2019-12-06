@@ -83,7 +83,7 @@ public:
 			const GLfloat c(cos(a)), c1(1.f - c), s(sin(a));
 
 			t.loadIdentity();
-			t[0] = (1.f - 12) * c + 12;
+			t[0] = (1.f - l2) * c + l2;
 			t[1] = lm * c1 + n * s;
 			t[2] = nl * c1 - m * s;
 			t[4] = lm * c1 - n * s;
