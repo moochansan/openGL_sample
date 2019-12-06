@@ -202,7 +202,7 @@ int main()
 
 	const GLuint program(loadProgram(vertFile, fragFile));
 
-	const GLint modelLoc(glGetUniformLocation(program, "model"));
+	const GLint modelviewLoc(glGetUniformLocation(program, "modelview"));
 
 	std::unique_ptr<const Shape> shape(new Shape(2, 4, rectangleVertex));
 
@@ -221,7 +221,11 @@ int main()
 
 		const Matrix model(translation * scaling);
 
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, model.data());
+		const Matrix view(Matrix::lookat(0.f, 0.f, 0.f, -1.f, -1.f, -1.f, 0.f, 1.f, 0.f));
+
+		const Matrix modelview(view * model);
+
+		glUniformMatrix4fv(modelviewLoc, 1, GL_FALSE, modelview.data());
 
 		shape->draw();
 
