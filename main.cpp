@@ -6,6 +6,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include "Window.h"
+#include "Matrix.h"
 #include "Shape.h"
 
 
@@ -201,9 +202,7 @@ int main()
 
 	const GLuint program(loadProgram(vertFile, fragFile));
 
-	const GLint sizeLoc(glGetUniformLocation(program, "size"));
-	const GLint scaleLoc(glGetUniformLocation(program, "scale"));
-	const GLint locationLoc(glGetUniformLocation(program, "location"));
+	const GLint modelLoc(glGetUniformLocation(program, "model"));
 
 	std::unique_ptr<const Shape> shape(new Shape(2, 4, rectangleVertex));
 
@@ -213,9 +212,16 @@ int main()
 
 		glUseProgram(program);
 		
-		glUniform2fv(sizeLoc, 1, window.getSize());
-		glUniform1f(scaleLoc, window.getScale());
-		glUniform2fv(locationLoc, 1, window.getLocation());
+		const GLfloat* const size(window.getSize());
+		const GLfloat scale(window.getScale() * 2.f);
+		const Matrix scaling(Matrix::scale(scale / size[0], scale / size[1], 1.f));
+
+		const GLfloat* const position(window.getLocation());
+		const Matrix translation(Matrix::translate(position[0], position[1], 0.f));
+
+		const Matrix model(translation * scaling);
+
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, model.data());
 
 		shape->draw();
 
