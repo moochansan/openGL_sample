@@ -203,6 +203,7 @@ int main()
 	const GLuint program(loadProgram(vertFile, fragFile));
 
 	const GLint modelviewLoc(glGetUniformLocation(program, "modelview"));
+	const GLint projectionLoc(glGetUniformLocation(program, "projection"));
 
 	std::unique_ptr<const Shape> shape(new Shape(2, 4, rectangleVertex));
 
@@ -213,18 +214,19 @@ int main()
 		glUseProgram(program);
 		
 		const GLfloat* const size(window.getSize());
-		const GLfloat scale(window.getScale() * 2.f);
-		const Matrix scaling(Matrix::scale(scale / size[0], scale / size[1], 1.f));
+
+		const GLfloat fovy(window.getScale() * 0.01f);
+		const GLfloat aspect(size[0] / size[1]);
+		const Matrix projection(Matrix::perspective(fovy, aspect, 1.f, 10.f));
 
 		const GLfloat* const position(window.getLocation());
-		const Matrix translation(Matrix::translate(position[0], position[1], 0.f));
+		const Matrix model(Matrix::translate(position[0], position[1], 0.f));
 
-		const Matrix model(translation * scaling);
-
-		const Matrix view(Matrix::lookat(0.f, 0.f, 0.f, -1.f, -1.f, -1.f, 0.f, 1.f, 0.f));
+		const Matrix view(Matrix::lookat(3.f, 4.f, 5.f, 0.f, 0.f, 0.f, 0.f, 1.f, 0.f));
 
 		const Matrix modelview(view * model);
 
+		glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, projection.data());
 		glUniformMatrix4fv(modelviewLoc, 1, GL_FALSE, modelview.data());
 
 		shape->draw();

@@ -175,4 +175,73 @@ public:
 		return rv * tv;
 	}
 
+	static Matrix orthogonal(
+		GLfloat left, GLfloat right,
+		GLfloat bottom, GLfloat top,
+		GLfloat zNear, GLfloat zFar)
+	{
+		Matrix t;
+		const GLfloat dx(right - left);
+		const GLfloat dy(top - bottom);
+		const GLfloat dz(zFar - zNear);
+
+		if (dx != 0.f && dy != 0.f && dz != 0.f)
+		{
+			t.loadIdentity();
+			t[0] = 2.f / dx;
+			t[5] = 2.f / dy;
+			t[10] = -2.f / dz;
+			t[12] = -(right + left) / dx;
+			t[13] = -(top + bottom) / dy;
+			t[14] = -(zFar + zNear) / dz;
+		}
+
+		return t;
+	}
+
+	static Matrix frustum(
+		GLfloat left, GLfloat right,
+		GLfloat bottom, GLfloat top,
+		GLfloat zNear, GLfloat zFar)
+	{
+		Matrix t;
+		const GLfloat dx(right - left);
+		const GLfloat dy(top - bottom);
+		const GLfloat dz(zFar - zNear);
+
+		if (dx != 0.f && dy != 0.f && dz != 0.f)
+		{
+			t.loadIdentity();
+			t[0] = 2.f * zNear / dx;
+			t[5] = 2.f * zNear / dy;
+			t[8] = (right + left) / dx;
+			t[9] = (top + bottom) / dy;
+			t[10] = -(zFar + zNear) / dz;;
+			t[11] = -1.f;
+			t[14] = -2.f * zFar * zNear / dz;
+			t[15] = 0.f;
+		}
+
+		return t;
+	}
+
+	static Matrix perspective(GLfloat fovy, GLfloat aspect, GLfloat zNear, GLfloat zFar)
+	{
+		Matrix t;
+		const GLfloat dz(zFar - zNear);
+
+		if (dz != 0.f)
+		{
+			t.loadIdentity();
+			t[5] = 1.f / tan(fovy * 0.5f);
+			t[0] = t[5] / aspect;
+			t[10] = -(zFar + zNear) / dz;
+			t[11] = -1.f;
+			t[14] = -2.f * zFar * zNear / dz;
+			t[15] = 0.f;
+		}
+
+		return t;
+	}
+
 };
