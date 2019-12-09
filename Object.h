@@ -10,7 +10,7 @@ private:
 public:
 	struct Vertex
 	{
-		GLfloat position[2];
+		GLfloat position[3];
 	};
 
 	Object(GLint size, GLsizei vertexcount, const Vertex *vertex)

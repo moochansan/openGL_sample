@@ -169,6 +169,23 @@ constexpr Object::Vertex rectangleVertex[] =
 	{-0.5f,  0.5f}
 };
 
+constexpr Object::Vertex octahedronVertex[] =
+{
+	{  0.0f,  1.0f,  0.0f },
+	{ -1.0f,  0.0f,  0.0f },
+	{  0.0f, -1.0f,  0.0f },
+	{  1.0f,  0.0f,  0.0f },
+	{  0.0f,  1.0f,  0.0f },
+	{  0.0f,  0.0f,  1.0f },
+	{  0.0f, -1.0f,  0.0f },
+	{  0.0f,  0.0f, -1.0f },
+	{ -1.0f,  0.0f,  0.0f },
+	{  0.0f,  0.0f,  1.0f },
+	{  1.0f,  0.0f,  0.0f },
+	{  0.0f,  0.0f, -1.0f }
+};
+
+
 int main()
 {
 	// GLFWの初期化
@@ -205,7 +222,7 @@ int main()
 	const GLint modelviewLoc(glGetUniformLocation(program, "modelview"));
 	const GLint projectionLoc(glGetUniformLocation(program, "projection"));
 
-	std::unique_ptr<const Shape> shape(new Shape(2, 4, rectangleVertex));
+	std::unique_ptr<const Shape> shape(new Shape(3, 12, octahedronVertex));
 
 	while (window)
 	{
