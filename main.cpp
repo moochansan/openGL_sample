@@ -8,6 +8,7 @@
 #include "Window.h"
 #include "Matrix.h"
 #include "Shape.h"
+#include "ShapeIndex.h"
 
 
 /**
@@ -185,6 +186,34 @@ constexpr Object::Vertex octahedronVertex[] =
 	{  0.0f,  0.0f, -1.0f }
 };
 
+constexpr Object::Vertex cubeVertex[] =
+{
+ { -1.0f, -1.0f, -1.0f },
+ { -1.0f, -1.0f,  1.0f },
+ { -1.0f,  1.0f,  1.0f },
+ { -1.0f,  1.0f, -1.0f },
+ {  1.0f,  1.0f, -1.0f },
+ {  1.0f, -1.0f, -1.0f },
+ {  1.0f, -1.0f,  1.0f },
+ {  1.0f,  1.0f,  1.0f }
+};
+
+constexpr GLuint wireCubeIndex[] =
+{
+ 1, 0,
+ 2, 7,
+ 3, 0,
+ 4, 7,
+ 5, 0,
+ 6, 7,
+ 1, 2,
+ 2, 3,
+ 3, 4,
+ 4, 5,
+ 5, 6,
+ 6, 1
+};
+
 
 int main()
 {
@@ -223,6 +252,7 @@ int main()
 	const GLint projectionLoc(glGetUniformLocation(program, "projection"));
 
 	std::unique_ptr<const Shape> shape(new Shape(3, 12, octahedronVertex));
+	std::unique_ptr<const Shape> shapeCube(new ShapeIndex(3, 8, cubeVertex, 24, wireCubeIndex));
 
 	while (window)
 	{
@@ -246,7 +276,8 @@ int main()
 		glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, projection.data());
 		glUniformMatrix4fv(modelviewLoc, 1, GL_FALSE, modelview.data());
 
-		shape->draw();
+//		shape->draw();
+		shapeCube->draw();
 
 		window.swapBuffers();
 	}

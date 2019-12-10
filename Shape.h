@@ -10,8 +10,13 @@ protected:
 	const GLsizei vertexCount;
 
 public:
-	Shape(GLint size, GLsizei vertexcount, const Object::Vertex* vertex)
-	 : object(new Object(size, vertexcount, vertex)),
+	Shape(
+		GLint size,
+		GLsizei vertexcount,
+		const Object::Vertex* vertex,
+		GLsizei indexcount = 0,
+		const GLuint* index = NULL)
+	 : object(new Object(size, vertexcount, vertex, indexcount, index)),
 	   vertexCount(vertexcount)
 	{}
 
