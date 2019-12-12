@@ -12,8 +12,14 @@ public:
 	struct Vertex
 	{
 		GLfloat position[3];
+		GLfloat color[3];
 	};
 
+	// size: 頂点の位置の次元
+	// vertexcount: 頂点の数
+	// vertex: 頂点属性を格納した配列
+	// indexcount: 頂点のインデックスの要素数
+	// index: 頂点のインデックスを格納した配列
 	Object(
 		GLint size,
 		GLsizei vertexcount,
@@ -28,8 +34,11 @@ public:
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);
 		glBufferData(GL_ARRAY_BUFFER, vertexcount * sizeof(Vertex), vertex, GL_STATIC_DRAW);
 
-		glVertexAttribPointer(0, size, GL_FLOAT, GL_FALSE, 0, 0);
+		glVertexAttribPointer(0, size, GL_FLOAT, GL_FALSE, sizeof(Vertex), static_cast<Vertex*>(0)->position);
 		glEnableVertexAttribArray(0);
+
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), static_cast<Vertex*>(0)->color);
+		glEnableVertexAttribArray(1);
 
 		glGenBuffers(1, &ibo);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
