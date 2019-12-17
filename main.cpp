@@ -9,6 +9,7 @@
 #include "Matrix.h"
 #include "Shape.h"
 #include "ShapeIndex.h"
+#include "SolidShapeIndex.h"
 
 
 /**
@@ -215,6 +216,60 @@ constexpr GLuint wireCubeIndex[] =
  6, 1
 };
 
+constexpr GLuint solidCubeIndex[] =
+{
+	0, 1, 2, 0, 2, 3, 
+	0, 3, 4, 0, 4, 5,
+	0, 5, 6, 0, 6, 1,
+	7, 6, 5, 7, 5, 4,
+	7, 4, 3, 7, 3, 2,
+	7, 2, 1, 7, 1, 6
+};
+
+constexpr Object::Vertex solidCubeVertex[] =
+{
+	// 左
+	{ -1.0f, -1.0f, -1.0f, 0.1f, 0.8f, 0.1f },
+	{ -1.0f, -1.0f,  1.0f, 0.1f, 0.8f, 0.1f },
+	{ -1.0f,  1.0f,  1.0f, 0.1f, 0.8f, 0.1f },
+	{ -1.0f,  1.0f, -1.0f, 0.1f, 0.8f, 0.1f },
+	// 裏
+	{  1.0f, -1.0f, -1.0f, 0.8f, 0.1f, 0.8f },
+	{ -1.0f, -1.0f, -1.0f, 0.8f, 0.1f, 0.8f },
+	{ -1.0f,  1.0f, -1.0f, 0.8f, 0.1f, 0.8f },
+	{  1.0f,  1.0f, -1.0f, 0.8f, 0.1f, 0.8f },
+	// 下
+	{ -1.0f, -1.0f, -1.0f, 0.1f, 0.8f, 0.8f },
+	{  1.0f, -1.0f, -1.0f, 0.1f, 0.8f, 0.8f },
+	{  1.0f, -1.0f,  1.0f, 0.1f, 0.8f, 0.8f },
+	{ -1.0f, -1.0f,  1.0f, 0.1f, 0.8f, 0.8f },
+	// 右
+	{  1.0f, -1.0f,  1.0f, 0.1f, 0.1f, 0.8f },
+	{  1.0f, -1.0f, -1.0f, 0.1f, 0.1f, 0.8f },
+	{  1.0f,  1.0f, -1.0f, 0.1f, 0.1f, 0.8f },
+	{  1.0f,  1.0f,  1.0f, 0.1f, 0.1f, 0.8f },
+	// 上
+	{ -1.0f,  1.0f, -1.0f, 0.8f, 0.1f, 0.1f },
+	{ -1.0f,  1.0f,  1.0f, 0.8f, 0.1f, 0.1f },
+	{  1.0f,  1.0f,  1.0f, 0.8f, 0.1f, 0.1f },
+	{  1.0f,  1.0f, -1.0f, 0.8f, 0.1f, 0.1f },
+	// 前
+	{ -1.0f, -1.0f,  1.0f, 0.8f, 0.8f, 0.1f },
+	{  1.0f, -1.0f,  1.0f, 0.8f, 0.8f, 0.1f },
+	{  1.0f,  1.0f,  1.0f, 0.8f, 0.8f, 0.1f },
+	{ -1.0f,  1.0f,  1.0f, 0.8f, 0.8f, 0.1f }
+};
+
+constexpr GLuint solidCubeFaceColorIndex[] =
+{
+	 0,  1,  2,  0,  2,  3,
+	 4,  5,  6,  4,  6,  7,
+	 8,  9, 10,  8, 10, 11,
+	12, 13, 14, 12, 14, 15,
+	16, 17, 18, 16, 18, 19,
+	20, 21, 22, 20, 22, 23
+};
+
 
 int main()
 {
@@ -254,6 +309,7 @@ int main()
 
 	std::unique_ptr<const Shape> shape(new Shape(3, 12, octahedronVertex));
 	std::unique_ptr<const Shape> shapeCube(new ShapeIndex(3, 8, cubeVertex, 24, wireCubeIndex));
+	std::unique_ptr<const Shape> shapeCubeTriangles(new SolidShapeIndex(3, 24, solidCubeVertex, 36, solidCubeFaceColorIndex));
 
 	while (window)
 	{
@@ -278,7 +334,8 @@ int main()
 		glUniformMatrix4fv(modelviewLoc, 1, GL_FALSE, modelview.data());
 
 //		shape->draw();
-		shapeCube->draw();
+//		shapeCube->draw();
+		shapeCubeTriangles->draw();
 
 		window.swapBuffers();
 	}
