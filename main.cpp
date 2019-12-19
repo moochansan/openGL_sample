@@ -297,6 +297,10 @@ int main()
 	glCullFace(GL_BACK);
 	glEnable(GL_CULL_FACE);
 
+	glClearDepth(1.0);
+	glDepthFunc(GL_LESS);
+	glEnable(GL_DEPTH_TEST);
+
 #ifdef _WIN64
 	const char* vertFile = "..\\sample\\point.vert";
 	const char* fragFile = "..\\sample\\point.frag";
@@ -319,7 +323,7 @@ int main()
 
 	while (window)
 	{
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		glUseProgram(program);
 		
@@ -342,6 +346,10 @@ int main()
 
 //		shape->draw();
 //		shapeCube->draw();
+		shapeCubeTriangles->draw();
+
+		const Matrix modelView1(modelview * Matrix::translate(0.f, 0.f, 3.f));
+		glUniformMatrix4fv(modelviewLoc, 1, GL_FALSE, modelView1.data());
 		shapeCubeTriangles->draw();
 
 		window.swapBuffers();
