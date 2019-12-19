@@ -350,6 +350,10 @@ int main()
 	
 	glClearColor(1.f, 1.f, 1.f, 0.f);
 
+	glFrontFace(GL_CCW);
+	glCullFace(GL_BACK);
+	glEnable(GL_CULL_FACE);
+
 #ifdef _WIN64
 	const char* vertFile = "..\\sample\\point.vert";
 	const char* fragFile = "..\\sample\\point.frag";
@@ -369,6 +373,8 @@ int main()
 	std::unique_ptr<const Shape> shapeCubeTriangles(new SolidShapeIndex(3, 24, solidCubeVertex, 36, solidCubeFaceColorIndex));	
 	std::unique_ptr<const Shape> shapeCubeTriangles36(new SolidShapeIndex(3, 36, solidCubeVertex36, 36, solidCubeFaceColorIndex36));	
 
+	glfwSetTime(0.0);
+
 	while (window)
 	{
 		glClear(GL_COLOR_BUFFER_BIT);
@@ -382,7 +388,8 @@ int main()
 		const Matrix projection(Matrix::perspective(fovy, aspect, 1.f, 10.f));
 
 		const GLfloat* const position(window.getLocation());
-		const Matrix model(Matrix::translate(position[0], position[1], 0.f));
+		const Matrix r(Matrix::rotate(static_cast<GLfloat>(glfwGetTime()), 0.f, 1.f, 0.f));
+		const Matrix model(Matrix::translate(position[0], position[1], 0.f) * r);
 
 		const Matrix view(Matrix::lookat(3.f, 4.f, 5.f, 0.f, 0.f, 0.f, 0.f, 1.f, 0.f));
 
