@@ -10,6 +10,7 @@
 #include "Shape.h"
 #include "ShapeIndex.h"
 #include "SolidShapeIndex.h"
+#include "SolidShape.h"
 
 
 /**
@@ -270,6 +271,62 @@ constexpr GLuint solidCubeFaceColorIndex[] =
 	20, 21, 22, 20, 22, 23
 };
 
+constexpr Object::Vertex solidCubeVertex36[] =
+{
+	// 左
+	{ -1.0f, -1.0f, -1.0f, 0.1f, 0.8f, 0.1f },
+	{ -1.0f, -1.0f,  1.0f, 0.1f, 0.8f, 0.1f },
+	{ -1.0f,  1.0f,  1.0f, 0.1f, 0.8f, 0.1f },
+	{ -1.0f, -1.0f, -1.0f, 0.1f, 0.8f, 0.1f },
+	{ -1.0f,  1.0f,  1.0f, 0.1f, 0.8f, 0.1f },
+	{ -1.0f,  1.0f, -1.0f, 0.1f, 0.8f, 0.1f },
+	// 裏
+	{  1.0f, -1.0f, -1.0f, 0.8f, 0.1f, 0.8f },
+	{ -1.0f, -1.0f, -1.0f, 0.8f, 0.1f, 0.8f },
+	{ -1.0f,  1.0f, -1.0f, 0.8f, 0.1f, 0.8f },
+	{  1.0f, -1.0f, -1.0f, 0.8f, 0.1f, 0.8f },
+	{ -1.0f,  1.0f, -1.0f, 0.8f, 0.1f, 0.8f },
+	{  1.0f,  1.0f, -1.0f, 0.8f, 0.1f, 0.8f },
+	// 下
+	{ -1.0f, -1.0f, -1.0f, 0.1f, 0.8f, 0.8f },
+	{  1.0f, -1.0f, -1.0f, 0.1f, 0.8f, 0.8f },
+	{  1.0f, -1.0f,  1.0f, 0.1f, 0.8f, 0.8f },
+	{ -1.0f, -1.0f, -1.0f, 0.1f, 0.8f, 0.8f },
+	{  1.0f, -1.0f,  1.0f, 0.1f, 0.8f, 0.8f },
+	{ -1.0f, -1.0f,  1.0f, 0.1f, 0.8f, 0.8f },
+	// 右
+	{  1.0f, -1.0f,  1.0f, 0.1f, 0.1f, 0.8f },
+	{  1.0f, -1.0f, -1.0f, 0.1f, 0.1f, 0.8f },
+	{  1.0f,  1.0f, -1.0f, 0.1f, 0.1f, 0.8f },
+	{  1.0f, -1.0f,  1.0f, 0.1f, 0.1f, 0.8f },
+	{  1.0f,  1.0f, -1.0f, 0.1f, 0.1f, 0.8f },
+	{  1.0f,  1.0f,  1.0f, 0.1f, 0.1f, 0.8f },
+	// 上
+	{ -1.0f,  1.0f, -1.0f, 0.8f, 0.1f, 0.1f },
+	{ -1.0f,  1.0f,  1.0f, 0.8f, 0.1f, 0.1f },
+	{  1.0f,  1.0f,  1.0f, 0.8f, 0.1f, 0.1f },
+	{ -1.0f,  1.0f, -1.0f, 0.8f, 0.1f, 0.1f },
+	{  1.0f,  1.0f,  1.0f, 0.8f, 0.1f, 0.1f },
+	{  1.0f,  1.0f, -1.0f, 0.8f, 0.1f, 0.1f },
+	// 前
+	{ -1.0f, -1.0f,  1.0f, 0.8f, 0.8f, 0.1f },
+	{  1.0f, -1.0f,  1.0f, 0.8f, 0.8f, 0.1f },
+	{  1.0f,  1.0f,  1.0f, 0.8f, 0.8f, 0.1f },
+	{ -1.0f, -1.0f,  1.0f, 0.8f, 0.8f, 0.1f },
+	{  1.0f,  1.0f,  1.0f, 0.8f, 0.8f, 0.1f },
+	{ -1.0f,  1.0f,  1.0f, 0.8f, 0.8f, 0.1f }
+};
+
+constexpr GLuint solidCubeFaceColorIndex36[] =
+{
+	 0,  1,  2,  3,  4,  5,
+	 6,  7,  8,  9, 10, 11,
+	12, 13, 14, 15, 16, 17,
+	18, 19, 20, 21, 22, 23,
+	24, 25, 26, 27, 28, 29,
+	30, 31, 32, 33, 34, 35
+};
+
 
 int main()
 {
@@ -309,7 +366,8 @@ int main()
 
 	std::unique_ptr<const Shape> shape(new Shape(3, 12, octahedronVertex));
 	std::unique_ptr<const Shape> shapeCube(new ShapeIndex(3, 8, cubeVertex, 24, wireCubeIndex));
-	std::unique_ptr<const Shape> shapeCubeTriangles(new SolidShapeIndex(3, 24, solidCubeVertex, 36, solidCubeFaceColorIndex));
+	std::unique_ptr<const Shape> shapeCubeTriangles(new SolidShapeIndex(3, 24, solidCubeVertex, 36, solidCubeFaceColorIndex));	
+	std::unique_ptr<const Shape> shapeCubeTriangles36(new SolidShapeIndex(3, 36, solidCubeVertex36, 36, solidCubeFaceColorIndex36));	
 
 	while (window)
 	{
@@ -335,7 +393,7 @@ int main()
 
 //		shape->draw();
 //		shapeCube->draw();
-		shapeCubeTriangles->draw();
+		shapeCubeTriangles36->draw();
 
 		window.swapBuffers();
 	}
