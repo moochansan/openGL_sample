@@ -102,7 +102,7 @@ GLuint createProgram(const char* vsrc, const char* fsrc)
 
 	// プログラムオブジェクトをリンクする
 	glBindAttribLocation(program, 0, "position");
-	glBindAttribLocation(program, 1, "color");
+	glBindAttribLocation(program, 1, "normal");
 	glBindFragDataLocation(program, 0, "fragment");
 	glLinkProgram(program);
 
@@ -274,47 +274,47 @@ constexpr GLuint solidCubeFaceColorIndex[] =
 constexpr Object::Vertex solidCubeVertex36[] =
 {
 	// 左
-	{ -1.0f, -1.0f, -1.0f, 0.1f, 0.8f, 0.1f },
-	{ -1.0f, -1.0f,  1.0f, 0.1f, 0.8f, 0.1f },
-	{ -1.0f,  1.0f,  1.0f, 0.1f, 0.8f, 0.1f },
-	{ -1.0f, -1.0f, -1.0f, 0.1f, 0.8f, 0.1f },
-	{ -1.0f,  1.0f,  1.0f, 0.1f, 0.8f, 0.1f },
-	{ -1.0f,  1.0f, -1.0f, 0.1f, 0.8f, 0.1f },
+	{ -1.0f, -1.0f, -1.0f, -1.0f, 0.0f, 0.0f },
+	{ -1.0f, -1.0f,  1.0f, -1.0f, 0.0f, 0.0f },
+	{ -1.0f,  1.0f,  1.0f, -1.0f, 0.0f, 0.0f },
+	{ -1.0f, -1.0f, -1.0f, -1.0f, 0.0f, 0.0f },
+	{ -1.0f,  1.0f,  1.0f, -1.0f, 0.0f, 0.0f },
+	{ -1.0f,  1.0f, -1.0f, -1.0f, 0.0f, 0.0f },
 	// 裏
-	{  1.0f, -1.0f, -1.0f, 0.8f, 0.1f, 0.8f },
-	{ -1.0f, -1.0f, -1.0f, 0.8f, 0.1f, 0.8f },
-	{ -1.0f,  1.0f, -1.0f, 0.8f, 0.1f, 0.8f },
-	{  1.0f, -1.0f, -1.0f, 0.8f, 0.1f, 0.8f },
-	{ -1.0f,  1.0f, -1.0f, 0.8f, 0.1f, 0.8f },
-	{  1.0f,  1.0f, -1.0f, 0.8f, 0.1f, 0.8f },
+	{  1.0f, -1.0f, -1.0f, 0.0f, 0.0f, -1.0f },
+	{ -1.0f, -1.0f, -1.0f, 0.0f, 0.0f, -1.0f },
+	{ -1.0f,  1.0f, -1.0f, 0.0f, 0.0f, -1.0f },
+	{  1.0f, -1.0f, -1.0f, 0.0f, 0.0f, -1.0f },
+	{ -1.0f,  1.0f, -1.0f, 0.0f, 0.0f, -1.0f },
+	{  1.0f,  1.0f, -1.0f, 0.0f, 0.0f, -1.0f },
 	// 下
-	{ -1.0f, -1.0f, -1.0f, 0.1f, 0.8f, 0.8f },
-	{  1.0f, -1.0f, -1.0f, 0.1f, 0.8f, 0.8f },
-	{  1.0f, -1.0f,  1.0f, 0.1f, 0.8f, 0.8f },
-	{ -1.0f, -1.0f, -1.0f, 0.1f, 0.8f, 0.8f },
-	{  1.0f, -1.0f,  1.0f, 0.1f, 0.8f, 0.8f },
-	{ -1.0f, -1.0f,  1.0f, 0.1f, 0.8f, 0.8f },
+	{ -1.0f, -1.0f, -1.0f, 0.0f, -1.0f, 0.0f },
+	{  1.0f, -1.0f, -1.0f, 0.0f, -1.0f, 0.0f },
+	{  1.0f, -1.0f,  1.0f, 0.0f, -1.0f, 0.0f },
+	{ -1.0f, -1.0f, -1.0f, 0.0f, -1.0f, 0.0f },
+	{  1.0f, -1.0f,  1.0f, 0.0f, -1.0f, 0.0f },
+	{ -1.0f, -1.0f,  1.0f, 0.0f, -1.0f, 0.0f },
 	// 右
-	{  1.0f, -1.0f,  1.0f, 0.1f, 0.1f, 0.8f },
-	{  1.0f, -1.0f, -1.0f, 0.1f, 0.1f, 0.8f },
-	{  1.0f,  1.0f, -1.0f, 0.1f, 0.1f, 0.8f },
-	{  1.0f, -1.0f,  1.0f, 0.1f, 0.1f, 0.8f },
-	{  1.0f,  1.0f, -1.0f, 0.1f, 0.1f, 0.8f },
-	{  1.0f,  1.0f,  1.0f, 0.1f, 0.1f, 0.8f },
+	{  1.0f, -1.0f,  1.0f, 1.0f, 0.0f, 0.0f },
+	{  1.0f, -1.0f, -1.0f, 1.0f, 0.0f, 0.0f },
+	{  1.0f,  1.0f, -1.0f, 1.0f, 0.0f, 0.0f },
+	{  1.0f, -1.0f,  1.0f, 1.0f, 0.0f, 0.0f },
+	{  1.0f,  1.0f, -1.0f, 1.0f, 0.0f, 0.0f },
+	{  1.0f,  1.0f,  1.0f, 1.0f, 0.0f, 0.0f },
 	// 上
-	{ -1.0f,  1.0f, -1.0f, 0.8f, 0.1f, 0.1f },
-	{ -1.0f,  1.0f,  1.0f, 0.8f, 0.1f, 0.1f },
-	{  1.0f,  1.0f,  1.0f, 0.8f, 0.1f, 0.1f },
-	{ -1.0f,  1.0f, -1.0f, 0.8f, 0.1f, 0.1f },
-	{  1.0f,  1.0f,  1.0f, 0.8f, 0.1f, 0.1f },
-	{  1.0f,  1.0f, -1.0f, 0.8f, 0.1f, 0.1f },
+	{ -1.0f,  1.0f, -1.0f, 0.0f, 1.0f, 0.0f },
+	{ -1.0f,  1.0f,  1.0f, 0.0f, 1.0f, 0.0f },
+	{  1.0f,  1.0f,  1.0f, 0.0f, 1.0f, 0.0f },
+	{ -1.0f,  1.0f, -1.0f, 0.0f, 1.0f, 0.0f },
+	{  1.0f,  1.0f,  1.0f, 0.0f, 1.0f, 0.0f },
+	{  1.0f,  1.0f, -1.0f, 0.0f, 1.0f, 0.0f },
 	// 前
-	{ -1.0f, -1.0f,  1.0f, 0.8f, 0.8f, 0.1f },
-	{  1.0f, -1.0f,  1.0f, 0.8f, 0.8f, 0.1f },
-	{  1.0f,  1.0f,  1.0f, 0.8f, 0.8f, 0.1f },
-	{ -1.0f, -1.0f,  1.0f, 0.8f, 0.8f, 0.1f },
-	{  1.0f,  1.0f,  1.0f, 0.8f, 0.8f, 0.1f },
-	{ -1.0f,  1.0f,  1.0f, 0.8f, 0.8f, 0.1f }
+	{ -1.0f, -1.0f,  1.0f, 0.0f, 0.0f, 1.0f },
+	{  1.0f, -1.0f,  1.0f, 0.0f, 0.0f, 1.0f },
+	{  1.0f,  1.0f,  1.0f, 0.0f, 0.0f, 1.0f },
+	{ -1.0f, -1.0f,  1.0f, 0.0f, 0.0f, 1.0f },
+	{  1.0f,  1.0f,  1.0f, 0.0f, 0.0f, 1.0f },
+	{ -1.0f,  1.0f,  1.0f, 0.0f, 0.0f, 1.0f },
 };
 
 constexpr GLuint solidCubeFaceColorIndex36[] =
@@ -371,10 +371,11 @@ int main()
 
 	const GLint modelviewLoc(glGetUniformLocation(program, "modelview"));
 	const GLint projectionLoc(glGetUniformLocation(program, "projection"));
+	const GLint normalMatrixLoc(glGetUniformLocation(program, "normalMatrix"));
 
 	std::unique_ptr<const Shape> shape(new Shape(3, 12, octahedronVertex));
 	std::unique_ptr<const Shape> shapeCube(new ShapeIndex(3, 8, cubeVertex, 24, wireCubeIndex));
-	std::unique_ptr<const Shape> shapeCubeTriangles(new SolidShapeIndex(3, 24, solidCubeVertex, 36, solidCubeFaceColorIndex));	
+	std::unique_ptr<const Shape> shapeCubeTriangles(new SolidShapeIndex(3, 24, solidCubeVertex, 36, solidCubeFaceColorIndex));
 	std::unique_ptr<const Shape> shapeCubeTriangles36(new SolidShapeIndex(3, 36, solidCubeVertex36, 36, solidCubeFaceColorIndex36));	
 
 	glfwSetTime(0.0);
@@ -397,18 +398,25 @@ int main()
 
 		const Matrix view(Matrix::lookat(3.f, 4.f, 5.f, 0.f, 0.f, 0.f, 0.f, 1.f, 0.f));
 
+		GLfloat normalMatrix[9];
+
 		const Matrix modelview(view * model);
+
+		modelview.getNormalMatrix(normalMatrix);
 
 		glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, projection.data());
 		glUniformMatrix4fv(modelviewLoc, 1, GL_FALSE, modelview.data());
+		glUniformMatrix3fv(normalMatrixLoc, 1, GL_FALSE, normalMatrix);
 
 //		shape->draw();
 //		shapeCube->draw();
 		shapeCubeTriangles36->draw();
 
 		const Matrix modelView1(modelview * Matrix::translate(0.f, 0.f, 3.f));
+		modelView1.getNormalMatrix(normalMatrix);
 		glUniformMatrix4fv(modelviewLoc, 1, GL_FALSE, modelView1.data());
-		shapeCubeTriangles->draw();
+		glUniformMatrix3fv(normalMatrixLoc, 1, GL_FALSE, normalMatrix);
+		shapeCubeTriangles36->draw();
 
 		window.swapBuffers();
 	}
